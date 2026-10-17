@@ -53,8 +53,10 @@ if('IntersectionObserver' in window){
    const frames=media?[{opacity:0,clipPath:'inset(12% 7% 12% 7% round 18px)',transform:'scale(.96)'},{opacity:1,clipPath:'inset(0% 0% 0% 0% round 0px)',transform:'scale(1)'}]:card?[{opacity:0,transform:`translateX(${index%2?22:-22}px) rotate(${index%2?.6:-.6}deg)`},{opacity:1,transform:'translateX(0) rotate(0deg)'}]:heading?[{opacity:0},{opacity:1}]:[{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'translateY(0)'}];
    el.getAnimations().forEach(a=>a.cancel());el.animate(frames,{duration:media?900:card?650:500,delay:Math.min(index*85,255),easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'});
   }
+   // A carousel entrance must not restart while its edge crosses the viewport.
+  if(el.closest('#cars,#blog'))observer.unobserve(el);
  }),{threshold:.05,rootMargin:'0px 0px -8px 0px'});
- $$('.reveal,.footer-top>div,.footer-socials,.footer-wordmark,.hero-proof,.route-heading h2,.service,.benefit-inline>div,.faq details,.office,.review,.customer-strip img,.calc-group,.about-copy>p,main h1,main h2,.section-head>p,.consult-copy>p,.car-image img,.office-map,.hero-copy>p,.hero-actions').forEach(el=>{el.classList.add('reveal');if(animationsEnabled)el.classList.add('pending');observer.observe(el);});
+ $$('.reveal,.footer-top>div,.footer-socials,.footer-wordmark,.hero-proof,.route-heading h2,.service,.benefit-inline>div,.faq details,.office,.review,.customer-strip img,.calc-group,.about-copy>p,main h1,main h2,.section-head>p,.consult-copy>p,.office-map,.hero-copy>p,.hero-actions').forEach(el=>{if(el.closest('#car-track,#video-track')){el.classList.remove('reveal','pending');return;}el.classList.add('reveal');if(animationsEnabled)el.classList.add('pending');observer.observe(el);});
 }
 
 // Scroll-synchronised gallery, retaining arrows, swipes and keyboard controls.
@@ -102,7 +104,7 @@ syncGalleryMode();
 
 // Original geographic SVG, camera-follow and car/ship handoff; eight PA stages.
 const route=$('#route'),routeSteps=$$('.route-step'),line=$('#route-line'),traveler=$('#route-traveler'),map=$('.route-map .map');
-const length=line.getTotalLength();line.setAttribute('stroke-dasharray',String(length));
+const length=line.getTotalLength();line.setAttribute('stroke-dasharray',String(length));line.style.strokeDasharray=String(length);
 const routePoints=Array.from({length:257},(_,index)=>{const point=line.getPointAtLength(length*index/256);return {x:point.x,y:point.y};});
 const scenes=[
  ['США · аукціон','Знайдемо ваше авто','Узгоджуємо побажання й бюджет, перевіряємо історію та обираємо лоти.','audi_q7.webp'],
@@ -115,7 +117,7 @@ const scenes=[
  ['Ваше місто · передача','Тепер — ваш маршрут','Погоджена підготовка завершена. Автомобіль їде у ваше місто.','image4.webp']
 ];
 const scenePositions=[0,.015,.06,.16,.60,.88,.95,1];
-let lastStage=-1,routeMobile=false,routeFrame=0,routePosition=0,routeTarget=0,routeCameraPhase=0;
+let lastStage=-1,routeMobile=false,routeFrame=0,routePosition=0,routeTarget=0,routeCameraPhase=0,routePinOffset=82;
 const routeCamera=document.createElementNS('http://www.w3.org/2000/svg','g');routeCamera.classList.add('route-camera');
 [...map.children].filter(node=>!['defs','title','desc'].includes(node.tagName.toLowerCase())).forEach(node=>routeCamera.append(node));map.append(routeCamera);
 let cameraTransform='';
@@ -140,20 +142,27 @@ function paintRoute(position){
  // Transport follows the path; a transform-only mobile camera follows scroll progress.
  traveler.setAttribute('transform',`translate(${point.x} ${point.y}) scale(.85)`);
  if(routeMobile&&animationsEnabled){
-  const zooms=[1,1.025,1.04,1.045,1.02,1.035,1.045,1],stage=Math.min(6,Math.floor(routeCameraPhase)),t=clamp(routeCameraPhase-stage),ease=t*t*(3-2*t);
+  const zooms=[1,1.16,1.28,1.36,1.22,1.6,1.95,2.2],stage=Math.min(6,Math.floor(routeCameraPhase)),t=clamp(routeCameraPhase-stage),ease=t*t*(3-2*t);
   const zoom=zooms[stage]+(zooms[stage+1]-zooms[stage])*ease;
   const halfWidth=375/zoom,halfHeight=140/zoom;
-  // Keep both countries and their labels in the frame while the camera moves.
-  const centerX=clamp(point.x,750-halfWidth,34+halfWidth),centerY=clamp(point.y-12,-20+halfHeight,260-halfHeight);
+  // Follow the route into Europe and finish with Ukraine near the center.
+  const centerX=clamp(point.x,halfWidth,1000-halfWidth),centerY=clamp(point.y-8,-20+halfHeight,400-halfHeight);
   const transform=`translate(${(390-centerX*zoom).toFixed(2)} ${(120-centerY*zoom).toFixed(2)}) scale(${zoom.toFixed(4)})`;
   if(transform!==cameraTransform){routeCamera.setAttribute('transform',transform);cameraTransform=transform;}
- }else if(cameraTransform){routeCamera.removeAttribute('transform');cameraTransform='';}
+  map.querySelector('.ocean-label').style.opacity=String(.7*(1-clamp((zoom-1.1)/.25)));
+ }else if(cameraTransform){routeCamera.removeAttribute('transform');cameraTransform='';map.querySelector('.ocean-label').style.opacity='.7';}
 
 }
 function moveRoute(target){
  routeTarget=clamp(target);routePosition=routeTarget;
  if(routeFrame){cancelAnimationFrame(routeFrame);routeFrame=0;}
  paintRoute(routePosition);
+}
+function measureRouteScene(){
+ if(!routeMobile)return;
+ const panel=$('.route-left'),layout=$('.route-layout'),height=panel.offsetHeight;
+ if(layout.style.getPropertyValue('--route-panel-height')!==height+'px')layout.style.setProperty('--route-panel-height',height+'px');
+ routePinOffset=parseFloat(getComputedStyle(panel).top)||82;
 }
 function syncRouteMode(){
  routeMobile=matchMedia('(max-width: 900px)').matches;
@@ -164,11 +173,11 @@ function syncRouteMode(){
  usa.setAttribute('x','310');usa.setAttribute('y','157');ukraine.setAttribute('x','698');ukraine.setAttribute('y','135');ukraine.setAttribute('text-anchor','middle');
  map.querySelectorAll('.map-label').forEach(el=>el.style.fontSize='18px');
  map.querySelector('.ocean-label').style.opacity='.7';
- const firstScene=lastStage<0;setRouteStage(firstScene?0:lastStage);moveRoute(firstScene?0:routePosition);
+ const firstScene=lastStage<0;setRouteStage(firstScene?0:lastStage);moveRoute(firstScene?0:routePosition);measureRouteScene();
 }
 function selectRouteStage(index){
  const next=clamp(index,0,7);routeCameraPhase=next;setRouteStage(next);moveRoute(scenePositions[next]);
- if(route.classList.contains('route-mobile-scene')){const layout=$('.route-layout');window.scrollTo({top:layout.getBoundingClientRect().top+scrollY-82+next*230,behavior:animationsEnabled?'smooth':'instant'});}
+ if(route.classList.contains('route-mobile-scene')){const layout=$('.route-layout');window.scrollTo({top:layout.getBoundingClientRect().top+scrollY-routePinOffset+next*230,behavior:animationsEnabled?'smooth':'instant'});}
  else if(!routeMobile){const step=routeSteps[next];window.scrollTo({top:step.getBoundingClientRect().top+scrollY-innerHeight*.36,behavior:animationsEnabled?'smooth':'instant'});}
 }
 $('#route-prev').addEventListener('click',()=>selectRouteStage(lastStage-1));
@@ -183,7 +192,7 @@ function updateRoute(){
   if(route.classList.contains('route-mobile-scene')){
    const rect=$('.route-layout').getBoundingClientRect();
    if(rect.top>innerHeight||rect.bottom<0)return;
-   const progress=clamp((82-rect.top)/230,0,7);routeCameraPhase=progress;
+   const progress=clamp((routePinOffset-rect.top)/230,0,7);routeCameraPhase=progress;
    const index=Math.min(7,Math.floor(progress+.001));
    setRouteStage(index);
    const fraction=progress-index;
@@ -211,6 +220,7 @@ function toggleMotion(){animationsEnabled=!animationsEnabled;if(!animationsEnabl
 motionButton.addEventListener('click',toggleMotion);$('#motion-mini').addEventListener('click',toggleMotion);
 reduced.addEventListener('change',()=>{document.documentElement.dataset.reducedMotion=String(reduced.matches);});
 syncMotion();onScroll();
+const routeSceneObserver=new ResizeObserver(()=>{measureRouteScene();onScroll();});routeSceneObserver.observe($('.route-left'));
 
 // Native local video playback; only one reel plays at a time.
 $$('.video-cover').forEach(button=>button.addEventListener('click',async()=>{
@@ -355,13 +365,15 @@ function updateActionVisibility(){
  const headerBottom=$('.header').getBoundingClientRect().bottom;
  const scene=$('.route-left').getBoundingClientRect();
  const routeVisible=scene.top<innerHeight-60&&scene.bottom>headerBottom+50;
- const inlineCTA=!routeVisible&&$$('main .btn').some(button=>{
+ const visibleBottom=(window.visualViewport?.offsetTop||0)+(window.visualViewport?.height||innerHeight);
+ const inlineCTA=!routeVisible&&$$('.hero-actions .btn').some(button=>{
   const rect=button.getBoundingClientRect();
-  return rect.width>0&&rect.top>=headerBottom&&rect.bottom<=innerHeight-18;
+  return rect.width>0&&rect.bottom>headerBottom&&rect.top<visibleBottom&&rect.right>0&&rect.left<innerWidth;
  });
- const editing=!!document.activeElement?.matches('input,textarea,select');
- const footerVisible=$('.footer').getBoundingClientRect().top<innerHeight*.8;
- const hidden=innerWidth<=600&&(routeVisible||inlineCTA||editing||footerVisible);
+ const consultationHeading=$('.consult-copy h2').getBoundingClientRect();
+ const consultationSubmit=$('#inquiry-form button[type="submit"]').getBoundingClientRect();
+ const consultationActive=consultationHeading.bottom<=visibleBottom&&consultationSubmit.bottom>headerBottom;
+ const hidden=innerWidth<=600&&(routeVisible||inlineCTA||consultationActive);
  if(bar.dataset.hidden!==String(hidden)){
   const from=getComputedStyle(bar),start={opacity:from.opacity,transform:from.transform};
   bar.getAnimations().forEach(animation=>animation.cancel());
@@ -375,6 +387,7 @@ function updateActionVisibility(){
  bar.inert=hidden;bar.setAttribute('aria-hidden',String(hidden));
 }
 document.addEventListener('focusin',onScroll);document.addEventListener('focusout',onScroll);
+window.visualViewport?.addEventListener('resize',onScroll);window.visualViewport?.addEventListener('scroll',onScroll);
 
 // Visible route-inspired background artwork, independent of the sticky map.
 $$('main>section,.footer').forEach((section,index)=>{

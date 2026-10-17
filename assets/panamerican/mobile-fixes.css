@@ -122,3 +122,21 @@ body.social-menu-open .floating-contact{box-shadow:0 0 0 3px #103d3b,0 0 0 5px #
 @media(max-width:600px){.services .service{padding:24px 22px;min-height:0;border-radius:16px}.services .service h3{font-size:28px;margin-top:17px}.services .service p{font-size:14px;margin-top:13px}.services .service .text-link{font-size:12px;margin-top:21px;padding-top:16px}.services .service .service-icon{width:30px;height:30px}.services .service .service-number{font-size:29px}}
 @media(hover:hover) and (pointer:fine){.services .service .service-icon{transition:transform .25s var(--ease)}.services .service:hover .service-icon{transform:translateY(-2px)}.services .service .text-link:hover>.ui-icon{background:#e79d2f18}}
 @media(max-width:600px){.footer{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}.footer-wordmark{margin-bottom:14px}.footer-bottom{padding-top:14px;gap:7px}}
+/* Gallery frames stay painted while the section crosses the viewport edge. */
+#car-track .car-image img{opacity:1;clip-path:none;animation:none;transition:none;transform:none}
+/* Center the mobile scene in usable space; let the geographic camera fill it. */
+@media(max-width:900px){
+ .route.route-mobile-scene .route-layout{min-height:calc(1770px + var(--route-panel-height,520px))}
+ .route.route-mobile-scene .route-left{top:max(82px,calc((100svh + 70px - 84px - var(--route-panel-height,520px))/2));padding-block:8px 10px}
+ .route.route-mobile-scene .route-map{height:clamp(250px,42svh,360px)}
+ .route.route-mobile-scene .route-story{height:150px;min-height:150px}
+}
+@media(max-width:900px) and (max-height:700px){.route.route-mobile-scene .route-map{height:240px}.route.route-mobile-scene .route-story{height:140px;min-height:140px}.route.route-mobile-scene .route-story h3{font-size:22px!important}}
+@media(max-width:900px) and (max-height:560px){.route.route-mobile-scene .route-map{height:160px}.route.route-mobile-scene .route-story{height:128px;min-height:128px}.route.route-mobile-scene .route-story p:not(.eyebrow){font-size:11.5px;line-height:1.55}.route.route-mobile-scene .route-story h3{font-size:20px!important}}
+/* Reserve only the space occupied by the dock when it returns after the form. */
+@media(max-width:600px){body:not(.actions-hidden) .footer{padding-bottom:calc(160px + env(safe-area-inset-bottom,0px))}}
+/* Match the inset photographs and amber outlines of the car gallery. */
+.video-track.kent-catalog>.video-card{box-sizing:border-box;padding:10px;border:1px solid #e79d2f90;border-radius:19px;background:var(--deep);overflow:hidden;box-shadow:0 8px 24px #0c302f18}
+.video-track.kent-catalog>.video-card.catalog-active{border-color:var(--orange)}
+.video-track.kent-catalog .video-shell{border-radius:10px;clip-path:inset(0 round 10px)}
+@media(max-width:600px){.video-track.kent-catalog>.video-card{padding:8px;border-radius:16px}.video-track.kent-catalog .video-shell{border-radius:9px;clip-path:inset(0 round 9px)}}
