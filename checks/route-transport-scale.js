@@ -21,6 +21,6 @@ async(page)=>{
   const rect=selector=>document.querySelector(selector).getBoundingClientRect().toJSON();
   return {map:rect('.route-map'),story:rect('#route-story'),marker:rect('#route-traveler'),country:rect('.country-ukraine')};
  });
- if(boxes.story.top<boxes.map.top||boxes.story.width>161||boxes.story.height>75||boxes.marker.top<boxes.story.bottom||boxes.country.width<140)throw Error('Map composition incorrect '+JSON.stringify(boxes));
+ if(boxes.story.top<boxes.map.top||boxes.story.width>176||boxes.story.height>100||boxes.marker.top<boxes.story.bottom||boxes.country.width<140)throw Error('Map composition incorrect '+JSON.stringify(boxes));
  await page.screenshot({path:'checks/screenshots/route62-ukraine.png'});
 }

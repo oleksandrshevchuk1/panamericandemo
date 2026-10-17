@@ -143,10 +143,10 @@ body.social-menu-open .floating-contact{box-shadow:0 0 0 3px #103d3b,0 0 0 5px #
 @media(max-width:900px){
  #route.route-mobile-scene .route-left{padding:0;background:transparent}
  #route.route-mobile-scene .route-map{height:clamp(250px,calc(100svh - 300px),380px);margin:0}
- #route.route-mobile-scene .route-story{position:absolute;z-index:3;top:8px;bottom:auto;left:8px;right:auto;width:150px;max-width:48%;box-sizing:border-box;margin:0;padding:6px 8px;height:auto;min-height:0;border:1px solid #e79d2f70;border-radius:9px;background:#103d3bf0;box-shadow:0 3px 10px #061e1b20}
- #route.route-mobile-scene .route-story h3{font-size:12px!important;line-height:1.25;color:#fff}
- #route.route-mobile-scene .route-story p:not(.eyebrow){display:block;font-size:9px;line-height:1.4;margin-top:4px;color:#d7e5de}
- #route.route-mobile-scene .route-story .eyebrow{font-size:7px;line-height:1.4;margin-bottom:4px;color:#f3b450}
+ #route.route-mobile-scene .route-story{position:absolute;z-index:3;top:8px;bottom:auto;left:8px;right:auto;width:175px;max-width:56%;box-sizing:border-box;margin:0;padding:8px 10px;height:auto;min-height:0;border:1px solid #e79d2f70;border-radius:9px;background:#103d3bf0;box-shadow:0 3px 10px #061e1b20}
+ #route.route-mobile-scene .route-story h3{font-size:14px!important;line-height:1.25;color:#fff}
+ #route.route-mobile-scene .route-story p:not(.eyebrow){display:block;font-size:10.5px;line-height:1.4;margin-top:4px;color:#d7e5de}
+ #route.route-mobile-scene .route-story .eyebrow{font-size:8px;line-height:1.4;margin-bottom:4px;color:#f3b450}
  #route.route-mobile-scene .route-current{top:auto;bottom:17px;left:12px;z-index:2}
  #route.route-mobile-scene .route-progress{position:absolute;bottom:0;left:0;right:0;width:100%;margin:0;z-index:4}
  #route.route-mobile-scene .route-scroll-hint{display:none}
