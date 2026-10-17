@@ -1,6 +1,10 @@
 /* Platform fixes: small decorative contrast, stable Safari overlays and SVG icons. */
 .ui-icon{display:inline-block;width:1em;height:1em;vertical-align:-.15em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .arrow .ui-icon{width:22px;height:22px}.circle-btn .ui-icon{width:20px;height:20px}.play-icon .ui-icon{fill:currentColor;stroke-width:1;width:23px;height:23px}
+.gallery-controls .circle-btn,.video-controls .circle-btn{padding:0;appearance:none;-webkit-appearance:none;line-height:0;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gallery-controls .circle-btn svg,.video-controls .circle-btn svg{display:block;width:20px;height:20px;overflow:visible;opacity:1;visibility:visible}
+.gallery-controls .circle-btn svg path{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.video-controls .circle-btn svg path{fill:none;stroke:#103d3b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .text-link .ui-icon,.footer-links .ui-icon,.footer-socials .ui-icon,.mobile-actions .ui-icon{width:16px;height:16px}
 .route-scroll-hint .ui-icon{width:12px;height:12px;margin-left:3px}
 .ambient-art{opacity:.14;pointer-events:none;z-index:-1}
@@ -149,7 +153,7 @@ body.social-menu-open .floating-contact{box-shadow:0 0 0 3px #103d3b,0 0 0 5px #
 }
 /* Dash lengths and traveler share SVG coordinates, including camera zoom. */
 .route-map #route-line{vector-effect:none;stroke-width:2.4;stroke-linecap:round}
-.route-map .country-label-usa,.route-map .country-label-ukraine{font-weight:700;letter-spacing:.02em;paint-order:stroke;stroke:#103d3b;stroke-width:3px;stroke-linejoin:round}
+.route-map .country-label-usa,.route-map .country-label-ukraine{font-weight:600;letter-spacing:.06em;stroke:none;stroke-width:0;font-kerning:none;text-rendering:geometricPrecision}
 @media(max-width:900px){
  #route.route-mobile-scene .route-progress{height:6px;border-radius:6px;background:#ffffff30}
  .route.route-mobile-scene .route-progress span{background:#f4ac37;border-radius:6px}
