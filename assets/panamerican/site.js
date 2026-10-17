@@ -331,6 +331,8 @@ document.addEventListener('click',event=>{
 });
 
 const contactDialog=$('#contact-dialog'),contactOpen=$('#contact-open');
+contactOpen.querySelector('svg').classList.add('chat-bubble-icon');
+contactOpen.insertAdjacentHTML('beforeend','<svg class="chat-close-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>');
 contactOpen.addEventListener('click',()=>{
  if($('#social-popover').matches(':popover-open'))$('#social-popover').hidePopover();
  contactDialog.showModal();contactOpen.setAttribute('aria-expanded','true');
@@ -349,6 +351,7 @@ contactDialog.addEventListener('click',event=>{const rect=contactDialog.getBound
 // Keep utility controls available; hide only the duplicate mobile CTA bar.
 function updateActionVisibility(){
  const bar=$('.mobile-actions');if(!bar)return;
+ if($('#social-popover').matches(':popover-open'))return; // Keep its button anchor still while the menu is open.
  const headerBottom=$('.header').getBoundingClientRect().bottom;
  const scene=$('.route-left').getBoundingClientRect();
  const routeVisible=scene.top<innerHeight-60&&scene.bottom>headerBottom+50;
@@ -357,7 +360,8 @@ function updateActionVisibility(){
   return rect.width>0&&rect.top>=headerBottom&&rect.bottom<=innerHeight-18;
  });
  const editing=!!document.activeElement?.matches('input,textarea,select');
- const hidden=innerWidth<=600&&(routeVisible||inlineCTA||editing);
+ const footerVisible=$('.footer').getBoundingClientRect().top<innerHeight*.8;
+ const hidden=innerWidth<=600&&(routeVisible||inlineCTA||editing||footerVisible);
  if(bar.dataset.hidden!==String(hidden)){
   const from=getComputedStyle(bar),start={opacity:from.opacity,transform:from.transform};
   bar.getAnimations().forEach(animation=>animation.cancel());
@@ -393,6 +397,8 @@ $$('main>section,.footer').forEach((section,index)=>{
  section.prepend(layer);
 });
 const socialMenu=$('#social-popover'),socialButton=$('.floating-contact');
+socialButton.querySelector('svg').classList.add('social-share-icon');
+socialButton.insertAdjacentHTML('beforeend','<svg class="social-close-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>');
 function positionSocialMenu(){
  const anchor=socialButton.getBoundingClientRect(),viewport=window.visualViewport;
  const topEdge=viewport?.offsetTop||0,bottomEdge=topEdge+(viewport?.height||innerHeight);
@@ -401,19 +407,29 @@ function positionSocialMenu(){
  const top=clamp(anchor.top-height-12,topEdge+82,Math.max(topEdge+82,bottomEdge-height-16));
  socialMenu.style.left=left+'px';socialMenu.style.top=top+'px';socialMenu.style.width=width+'px';
 }
-socialButton.addEventListener('click',()=>requestAnimationFrame(()=>{if(socialMenu.matches(':popover-open'))positionSocialMenu();}));
+// Position before the first visible paint; opacity is the only panel animation.
+socialButton.removeAttribute('popovertarget');socialButton.setAttribute('aria-controls','social-popover');socialButton.setAttribute('aria-expanded','false');
+let socialOpenAtPress=false;
+socialButton.addEventListener('pointerdown',()=>{socialOpenAtPress=socialMenu.matches(':popover-open');},{capture:true});
+socialButton.addEventListener('click',()=>{
+ const closing=socialOpenAtPress||socialMenu.matches(':popover-open');socialOpenAtPress=false;
+ if(closing){if(socialMenu.matches(':popover-open'))socialMenu.hidePopover();return;}
+ document.body.classList.add('social-menu-open');
+ socialMenu.style.visibility='hidden';socialMenu.showPopover();positionSocialMenu();socialMenu.style.visibility='visible';
+});
 window.addEventListener('resize',()=>{if(socialMenu.matches(':popover-open'))positionSocialMenu();});
 window.addEventListener('scroll',()=>{if(socialMenu.matches(':popover-open'))positionSocialMenu();},{passive:true});
 socialButton.addEventListener('transitionend',()=>{if(socialMenu.matches(':popover-open'))positionSocialMenu();});
 window.visualViewport?.addEventListener('resize',()=>{if(socialMenu.matches(':popover-open'))positionSocialMenu();});
 window.visualViewport?.addEventListener('scroll',()=>{if(socialMenu.matches(':popover-open'))positionSocialMenu();});
 socialMenu.addEventListener('toggle',event=>{
- const open=event.newState==='open';socialButton.classList.toggle('social-open',open);socialButton.setAttribute('aria-expanded',String(open));
- if(open){positionSocialMenu();if(animationsEnabled){socialMenu.getAnimations().forEach(a=>a.cancel());socialMenu.animate([{opacity:0,transform:'translateY(8px) scale(.97)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:260,easing:'cubic-bezier(.22,1,.36,1)'});}}
+ const open=event.newState==='open';socialButton.classList.toggle('social-open',open);socialButton.setAttribute('aria-expanded',String(open));document.body.classList.toggle('social-menu-open',open);
+ if(!open)onScroll();
+ if(open){positionSocialMenu();if(animationsEnabled){socialMenu.getAnimations().forEach(a=>a.cancel());socialMenu.animate([{opacity:0},{opacity:1}],{duration:260,easing:'cubic-bezier(.22,1,.36,1)'});}}
  if(!open||!animationsEnabled)return;
  socialMenu.querySelectorAll('p,a').forEach((item,index)=>{
   item.getAnimations().forEach(animation=>animation.cancel());
-  item.animate([{opacity:0,transform:'translateX(-14px)'},{opacity:1,transform:'translateX(0)'}],{duration:350,delay:index*65,easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'});
+  item.animate([{opacity:0},{opacity:1}],{duration:350,delay:index*65,easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'});
  });
 });
 
