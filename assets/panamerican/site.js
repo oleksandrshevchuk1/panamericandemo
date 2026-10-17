@@ -117,6 +117,7 @@ const scenes=[
  ['Ваше місто · передача','Тепер — ваш маршрут','Погоджена підготовка завершена. Автомобіль їде у ваше місто.','image4.webp']
 ];
 const scenePositions=[0,.015,.06,.16,.60,.88,.95,1];
+const routeShortDescriptions=['Підбираємо лоти під ваш бюджет.','Узгоджуємо умови й підписуємо договір.','Узгоджуємо ставку й купуємо авто.','Веземо авто до порту відправлення.','Перевозимо авто через Атлантику.','Доставляємо з порту до України.','Оформлюємо документи на митниці.','Передаємо вам готове авто.'];
 let lastStage=-1,routeMobile=false,routeFrame=0,routePosition=0,routeTarget=0,routeCameraPhase=0,routePinOffset=82;
 const routeCamera=document.createElementNS('http://www.w3.org/2000/svg','g');routeCamera.classList.add('route-camera');
 [...map.children].filter(node=>!['defs','title','desc'].includes(node.tagName.toLowerCase())).forEach(node=>routeCamera.append(node));map.append(routeCamera);
@@ -129,25 +130,31 @@ function setRouteStage(index){
  $('#route-prev').disabled=index===0;$('#route-next').disabled=index===7;
  const scene=scenes[index];$('#route-current').textContent=String(index+1).padStart(2,'0')+' / 08 · '+routeSteps[index].querySelector('h3').textContent;
  // Progress is painted with the route and traveler from the same scroll position.
- $('#route-place').textContent=scene[0];$('#route-title').textContent=scene[1];$('#route-description').textContent=scene[2];
+ $('#route-place').textContent=scene[0];$('#route-title').textContent=scene[1];$('#route-description').textContent=routeMobile?routeShortDescriptions[index]:scene[2];
  $('#route-photo').src='assets/panamerican/'+scene[3];$('#route-photo').alt=scene[1];
- $('#transport-car').toggleAttribute('hidden',index===4);$('#transport-ship').toggleAttribute('hidden',index!==4);
  if(animationsEnabled){$('#route-story').getAnimations().forEach(a=>a.cancel());$('#route-story').animate([{opacity:0,transform:routeMobile?'translateY(18px) scale(.98)':'translateY(8px)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:420,easing:'cubic-bezier(.22,1,.36,1)'});}
 }
 function paintRoute(position){
  const sample=clamp(position)*256,index=Math.min(255,Math.floor(sample)),fraction=sample-index;
  const point={x:routePoints[index].x+(routePoints[index+1].x-routePoints[index].x)*fraction,y:routePoints[index].y+(routePoints[index+1].y-routePoints[index].y)*fraction};
+ const atSea=position>=.18&&position<.86;
+ $('#transport-car').toggleAttribute('hidden',atSea);$('#transport-ship').toggleAttribute('hidden',!atSea);
  line.setAttribute('stroke-dashoffset',String(length*(1-position)));
  $('#route-progress').style.transform=`scaleX(${position})`;
  // Transport follows the path; a transform-only mobile camera follows scroll progress.
  traveler.setAttribute('transform',`translate(${point.x} ${point.y}) scale(.85)`);
+ line.style.strokeWidth='2.4';
  if(routeMobile&&animationsEnabled){
-  const zooms=[1,1.16,1.28,1.36,1.22,1.6,1.95,2.2],stage=Math.min(6,Math.floor(routeCameraPhase)),t=clamp(routeCameraPhase-stage),ease=t*t*(3-2*t);
+  const zooms=[1.2,1.24,1.3,1.36,1.3,2.1,3.4,5.2],stage=Math.min(6,Math.floor(routeCameraPhase)),t=clamp(routeCameraPhase-stage),ease=t*t*(3-2*t);
   const zoom=zooms[stage]+(zooms[stage+1]-zooms[stage])*ease;
-  const halfWidth=375/zoom,halfHeight=140/zoom;
+  line.style.strokeWidth=String(2.4/zoom);
+  const halfWidth=375/zoom;
+  // Keep the transport and country names at a constant screen size as land zooms.
+  traveler.setAttribute('transform',`translate(${point.x} ${point.y}) scale(${1.02/zoom})`);
+  map.querySelectorAll('.country-label-usa,.country-label-ukraine').forEach(label=>label.style.fontSize=(22/zoom)+'px');
   // Follow the route into Europe and finish with Ukraine near the center.
-  const centerX=clamp(point.x,halfWidth,1000-halfWidth),centerY=clamp(point.y-8,-20+halfHeight,400-halfHeight);
-  const transform=`translate(${(390-centerX*zoom).toFixed(2)} ${(120-centerY*zoom).toFixed(2)}) scale(${zoom.toFixed(4)})`;
+  const centerX=clamp(point.x,halfWidth,1000-halfWidth),centerY=point.y;
+  const transform=`translate(${(390-centerX*zoom).toFixed(2)} ${(140-centerY*zoom).toFixed(2)}) scale(${zoom.toFixed(4)})`;
   if(transform!==cameraTransform){routeCamera.setAttribute('transform',transform);cameraTransform=transform;}
   map.querySelector('.ocean-label').style.opacity=String(.7*(1-clamp((zoom-1.1)/.25)));
  }else if(cameraTransform){routeCamera.removeAttribute('transform');cameraTransform='';map.querySelector('.ocean-label').style.opacity='.7';}
@@ -167,13 +174,14 @@ function measureRouteScene(){
 function syncRouteMode(){
  routeMobile=matchMedia('(max-width: 900px)').matches;
  route.classList.toggle('route-mobile',routeMobile);
- route.classList.toggle('route-mobile-scene',routeMobile&&innerHeight>=480);
- map.setAttribute('viewBox','15 -20 750 280');
+ route.classList.toggle('route-mobile-scene',routeMobile);
+ map.setAttribute('viewBox',routeMobile?'15 -20 750 280':'15 -20 750 280');
  const usa=map.querySelector('.country-label-usa'),ukraine=map.querySelector('.country-label-ukraine');
- usa.setAttribute('x','310');usa.setAttribute('y','157');ukraine.setAttribute('x','698');ukraine.setAttribute('y','135');ukraine.setAttribute('text-anchor','middle');
+ usa.setAttribute('x','267');usa.setAttribute('y','140');ukraine.setAttribute('x','705');ukraine.setAttribute('y','103');ukraine.setAttribute('text-anchor','middle');
  map.querySelectorAll('.map-label').forEach(el=>el.style.fontSize='18px');
  map.querySelector('.ocean-label').style.opacity='.7';
  const firstScene=lastStage<0;setRouteStage(firstScene?0:lastStage);moveRoute(firstScene?0:routePosition);measureRouteScene();
+ $('#route-description').textContent=routeMobile?routeShortDescriptions[lastStage]:scenes[lastStage][2];
 }
 function selectRouteStage(index){
  const next=clamp(index,0,7);routeCameraPhase=next;setRouteStage(next);moveRoute(scenePositions[next]);

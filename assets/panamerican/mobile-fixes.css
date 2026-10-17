@@ -136,6 +136,24 @@ body.social-menu-open .floating-contact{box-shadow:0 0 0 3px #103d3b,0 0 0 5px #
 /* Reserve only the space occupied by the dock when it returns after the form. */
 @media(max-width:600px){body:not(.actions-hidden) .footer{padding-bottom:calc(160px + env(safe-area-inset-bottom,0px))}}
 /* Match the inset photographs and amber outlines of the car gallery. */
+@media(max-width:900px){
+ #route.route-mobile-scene .route-left{padding:0;background:transparent}
+ #route.route-mobile-scene .route-map{height:clamp(250px,calc(100svh - 300px),380px);margin:0}
+ #route.route-mobile-scene .route-story{position:absolute;z-index:3;top:8px;bottom:auto;left:8px;right:auto;width:150px;max-width:48%;box-sizing:border-box;margin:0;padding:6px 8px;height:auto;min-height:0;border:1px solid #e79d2f70;border-radius:9px;background:#103d3bf0;box-shadow:0 3px 10px #061e1b20}
+ #route.route-mobile-scene .route-story h3{font-size:12px!important;line-height:1.25;color:#fff}
+ #route.route-mobile-scene .route-story p:not(.eyebrow){display:block;font-size:9px;line-height:1.4;margin-top:4px;color:#d7e5de}
+ #route.route-mobile-scene .route-story .eyebrow{font-size:7px;line-height:1.4;margin-bottom:4px;color:#f3b450}
+ #route.route-mobile-scene .route-current{top:auto;bottom:17px;left:12px;z-index:2}
+ #route.route-mobile-scene .route-progress{position:absolute;bottom:0;left:0;right:0;width:100%;margin:0;z-index:4}
+ #route.route-mobile-scene .route-scroll-hint{display:none}
+}
+/* Dash lengths and traveler share SVG coordinates, including camera zoom. */
+.route-map #route-line{vector-effect:none;stroke-width:2.4;stroke-linecap:round}
+.route-map .country-label-usa,.route-map .country-label-ukraine{font-weight:700;letter-spacing:.02em;paint-order:stroke;stroke:#103d3b;stroke-width:3px;stroke-linejoin:round}
+@media(max-width:900px){
+ #route.route-mobile-scene .route-progress{height:6px;border-radius:6px;background:#ffffff30}
+ .route.route-mobile-scene .route-progress span{background:#f4ac37;border-radius:6px}
+}
 .video-track.kent-catalog>.video-card{box-sizing:border-box;padding:10px;border:1px solid #e79d2f90;border-radius:19px;background:var(--deep);overflow:hidden;box-shadow:0 8px 24px #0c302f18}
 .video-track.kent-catalog>.video-card.catalog-active{border-color:var(--orange)}
 .video-track.kent-catalog .video-shell{border-radius:10px;clip-path:inset(0 round 10px)}
