@@ -1,0 +1,1 @@
+require('./panamerican.test.cjs');

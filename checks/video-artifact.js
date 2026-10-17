@@ -1,0 +1,1 @@
+async(page)=>{await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:4173/');await page.locator('#blog').scrollIntoViewIfNeeded();await page.waitForTimeout(1200);await page.screenshot({path:'checks/screenshots/video-artifact-before.png'});}

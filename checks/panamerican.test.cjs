@@ -1,0 +1,18 @@
+const assert = require('node:assert/strict');
+const { calculatePanAmerican } = require('../assets/panamerican/calculator.cjs');
+const base = {price:5000,engine:2,year:2020,fuel:'petrol',auction:'COPART'};
+const result = calculatePanAmerican(base,2026);
+assert.equal(result.auctionFee,850);
+assert.equal(result.services,500);
+assert.equal(result.insurance,200);
+assert.equal(result.customs,3120);
+assert.equal(result.total,12805);
+assert.equal(result.groups.flatMap(g=>g.items).reduce((s,i)=>s+i[1],0),result.total);
+assert.equal(calculatePanAmerican({...base,price:16000},2026).services,800);
+assert.equal(calculatePanAmerican({...base,price:16000},2026).insurance,320);
+assert.equal(calculatePanAmerican({...base,fuel:'elec',engine:0},2026).customs,1423);
+assert.equal(calculatePanAmerican({...base,auction:'IAAI'},2026).total,result.total);
+assert.equal(calculatePanAmerican({...base,price:1000},2026).feeUnspecified,true);
+assert.equal(calculatePanAmerican({...base,year:2000},2026).customs,calculatePanAmerican({...base,year:2011},2026).customs);
+for (const change of [{price:-1},{price:Infinity},{engine:0},{year:2027}]) assert.throws(()=>calculatePanAmerican({...base,...change},2026));
+console.log('PASS: source calculator fixture, item totals, service/insurance thresholds, EV, auction parity, missing fee warning, age cap and invalid inputs');

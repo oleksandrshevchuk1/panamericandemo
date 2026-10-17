@@ -1,0 +1,1 @@
+Built-in imagegen, identity-preserving edit of owner-hero.webp. Camera farther away; full body head to shoes with margins; same owner, dark BMW and Kent Cars office; natural cloudy daylight; 3:2 landscape with portrait crop safe area. Output: assets/images/owner-hero-wide.webp.

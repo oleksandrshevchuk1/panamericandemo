@@ -1,0 +1,288 @@
+{
+  "remove": [
+    {
+      "path": "D:\\pan american\\assets\\brand\\favicon.svg",
+      "bytes": 183
+    },
+    {
+      "path": "D:\\pan american\\assets\\brand\\logo-original.png",
+      "bytes": 63149
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\deliveries.png",
+      "bytes": 3010099
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\deliveries.webp",
+      "bytes": 380346
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\detail.jpg",
+      "bytes": 69027
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\hero.png",
+      "bytes": 2426427
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\hero.webp",
+      "bytes": 220862
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\office-original.jpg",
+      "bytes": 32829
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\owner-hero-wide.webp",
+      "bytes": 424154
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\owner-hero.png",
+      "bytes": 2253225
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\owner-hero.webp",
+      "bytes": 176720
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\owner-keys.png",
+      "bytes": 2253261
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\owner-keys.webp",
+      "bytes": 173482
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\owner-portrait.png",
+      "bytes": 76153
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\route-stages.png",
+      "bytes": 2862628
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\route-stages.webp",
+      "bytes": 350312
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\sedan-yard.png",
+      "bytes": 3152212
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\sedan-yard.webp",
+      "bytes": 397410
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\sedan.jpg",
+      "bytes": 177006
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\sport-yard.png",
+      "bytes": 2999067
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\sport-yard.webp",
+      "bytes": 336560
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\sport.jpg",
+      "bytes": 132455
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\audi_q3.jpg",
+      "bytes": 238158
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\audi_q5.jpg",
+      "bytes": 214242
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\audi_q7.jpg",
+      "bytes": 140217
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\bmw_328.jpg",
+      "bytes": 297444
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\bmw_540.jpg",
+      "bytes": 238856
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\company-cloud.82f68fcf0442fac041d1.png",
+      "bytes": 1184519
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\ford_f150_raptor.jpg",
+      "bytes": 170235
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\hero-campaign-v2.png",
+      "bytes": 2312513
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\honda_cbr600.jpg",
+      "bytes": 221799
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\hyundai_santafe.jpg",
+      "bytes": 182190
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\image1.png",
+      "bytes": 1537809
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\image2.png",
+      "bytes": 1513853
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\image3.png",
+      "bytes": 1731341
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\image4.png",
+      "bytes": 2164474
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\kia_niro.jpg",
+      "bytes": 216802
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\porsche_macan.jpg",
+      "bytes": 201025
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\tesla_s.jpg",
+      "bytes": 163823
+    },
+    {
+      "path": "D:\\pan american\\assets\\videos\\automotive.webm",
+      "bytes": 172226
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\references\\office-original.jpg",
+      "bytes": 32829
+    },
+    {
+      "path": "D:\\pan american\\assets\\images\\references\\owner-original.jpg",
+      "bytes": 27451
+    }
+  ],
+  "keep": [
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\3575172971765088813-0@uasaverbot.mp4",
+      "bytes": 2284873
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\3617783314483713117-0@uasaverbot.mp4",
+      "bytes": 17613927
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\3620621000877780202-0@uasaverbot.mp4",
+      "bytes": 8934875
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\3622194707135788481-0@uasaverbot.mp4",
+      "bytes": 18444347
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\3679429474985884780-0@uasaverbot.mp4",
+      "bytes": 13784253
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\audi_q3.webp",
+      "bytes": 313620
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\audi_q5.webp",
+      "bytes": 265632
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\audi_q7.webp",
+      "bytes": 148010
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\blog-1.jpg",
+      "bytes": 27242
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\blog-2.jpg",
+      "bytes": 35395
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\blog-3.jpg",
+      "bytes": 39311
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\blog-4.jpg",
+      "bytes": 39816
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\blog-5.jpg",
+      "bytes": 40409
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\bmw_328.webp",
+      "bytes": 394106
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\bmw_540.webp",
+      "bytes": 295922
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\company-cloud.82f68fcf0442fac041d1.webp",
+      "bytes": 40720
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\ford_f150_raptor.webp",
+      "bytes": 192322
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\hero-campaign-v2.webp",
+      "bytes": 287744
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\honda_cbr600.webp",
+      "bytes": 268600
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\hyundai_santafe.webp",
+      "bytes": 212918
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\image1.webp",
+      "bytes": 213312
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\image2.webp",
+      "bytes": 161026
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\image3.webp",
+      "bytes": 174678
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\image4.webp",
+      "bytes": 436224
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\kia_niro.webp",
+      "bytes": 261754
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\logo.png",
+      "bytes": 5516
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\porsche_macan.webp",
+      "bytes": 241958
+    },
+    {
+      "path": "D:\\pan american\\assets\\panamerican\\tesla_s.webp",
+      "bytes": 181790
+    }
+  ],
+  "bytesRemoved": 34929373,
+  "status": "completed"
+}
